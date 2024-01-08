@@ -1,7 +1,5 @@
-/*
- * Empty C++ Application
- */
-
+#include <xil_printf.h>
+#include "xtime_l.h"
 #include "Flexfft.h"
 #include "W_coef.h"
 #include "DataIn.h"
@@ -11,12 +9,17 @@
 
 int main()
 {
+	XTime Start;
+	XTime_GetTime(&Start);
 
 	sampleOutX_t outputData[FFT_LENGTH];
 	FlexFFT(DataIn, outputData);
 
-	/*
-	//medir el error de la aproximación
+	XTime End;
+	XTime_GetTime(&End);
+    printf("El tiempo de procesamiento es: %.6f",  1.0 * (End - Start) / (COUNTS_PER_SECOND/1000000));
+
+	//medir el error de la aproximaciÃ³n
     int i = 0;
     float error = 0;
     float errorRate = 0;
@@ -25,7 +28,7 @@ int main()
     float imagFlexFft = 0;
     float imagReference = 0;
 
-   for(i=0; i<SAMPLES; i++)
+    for(i=0; i<SAMPLES; i++)
     {
     	realFlexFft = real(outputData[i]);
     	imagFlexFft = imag(outputData[i]);
@@ -39,6 +42,6 @@ int main()
     		}
     }
     errorRate = error*100/SAMPLES;
-*/
+
 	return 0;
 }
